@@ -22,19 +22,13 @@ final class Version20240409093624 extends AbstractMigration
                         title VARCHAR(255) NOT NULL, 
                         text TEXT NOT NULL, 
                         PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, 
-                        name VARCHAR(255) NOT NULL, 
-                        email VARCHAR(255) NOT NULL, 
-                        birthdate DATE NOT NULL, 
-                        PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema): void
     {
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP SEQUENCE blog_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE "user_id_seq" CASCADE');
         $this->addSql('DROP TABLE blog');
-        $this->addSql('DROP TABLE "user"');
+
     }
 }
