@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\DataTransformer;
 
 use App\Entity\Tag;
@@ -12,7 +13,8 @@ class TagTransformer implements DataTransformerInterface
 {
     public function __construct(
         private readonly TagRepository $tagRepository
-    ) {
+    )
+    {
     }
 
     public function transform($value): string

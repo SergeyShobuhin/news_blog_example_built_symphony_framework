@@ -21,8 +21,7 @@ class BlogFilterType extends AbstractType
             ->add('text', TextType::class, [
                 'required' => false,
                 'label' => 'Поиск по содержимому текста',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
