@@ -1,10 +1,16 @@
 <?php
 namespace App\Filter;
 
+use App\Entity\User;
+
 class BlogFilter
 {
     private ?string $title = null;
     private ?string $text = null;
+
+    public function __construct(private ?User $user = null)
+    {
+    }
 
     public function getTitle(): ?string
     {
@@ -25,6 +31,18 @@ class BlogFilter
     public function setText(?string $text): static
     {
         $this->text = $text;
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
         return $this;
     }
 

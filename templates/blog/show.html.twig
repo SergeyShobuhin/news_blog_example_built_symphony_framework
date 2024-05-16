@@ -32,10 +32,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_blog_index') }}">back to list</a>
+    <a href="{{ path('app_user_blog_index') }}">back to list</a>
     <br><br>
 
-    <a href="{{ path('app_blog_edit', {'id': blog.id}) }}"><button class="btn-success"> edit </button></a>
+    <a href="{{ path('app_user_blog_edit', {'id': blog.id}) }}"><button class="btn-success"> edit </button></a>
     <br><br>
 
     {{ include('blog/_delete_form.html.twig') }}

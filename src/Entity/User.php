@@ -47,6 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    public function getEmailFormatted(): ?string
+    {
+        return 'Пользователь: '. $this->email;
+    }
+
     public function setEmail(string $email): static
     {
         $this->email = $email;
@@ -61,13 +66,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
+     * @return list<string>
      * @see UserInterface
      *
-     * @return list<string>
      */
     public function getRoles(): array
     {
