@@ -11,6 +11,8 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
+        "fakerphp/faker": "^1.23",
+        "knplabs/knp-paginator-bundle": "^6.3",
         "symfony/console": "7.0.*",
         "symfony/dotenv": "7.0.*",
         "symfony/flex": "^2",
@@ -27,6 +29,7 @@
         "symfonycasts/verify-email-bundle": "^1.17"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.6",
         "roave/security-advisories": "dev-latest",
         "symfony/debug-bundle": "6.4.*",
         "symfony/maker-bundle": "^1.58",
