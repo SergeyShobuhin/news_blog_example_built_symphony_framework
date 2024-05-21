@@ -46,6 +46,10 @@ class Blog
     #[ORM\ManyToMany(targetEntity: 'Tag', cascade: ['persist'])]
     private ArrayCollection|PersistentCollection $tags; //
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Assert\NotBlank]
+    private ?string $percent = null;
+
     public function __construct(UserInterface|User $user)
     {
         $this->user = $user;
@@ -133,4 +137,14 @@ class Blog
         return $this;
     }
 
+    public function getPercent(): ?string
+    {
+        return $this->percent;
+    }
+
+    public function setPercent(?string $percent): static
+    {
+        $this->percent = $percent;
+        return $this;
+    }
 }
