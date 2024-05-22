@@ -8,6 +8,7 @@ use App\Filter\BlogFilter;
 use App\Form\BlogFilterType;
 use App\Form\BlogType;
 use App\Repository\BlogRepository;
+use App\Service\ContentWatchApi;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,7 @@ class BlogController extends AbstractController
     }
 
     #[Route('/new', name: 'app_blog_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ContentWatchApi $contentWatchApi): Response
     {
         $blog = new Blog($this->getUser());
 
