@@ -12,8 +12,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class BlogVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const VIEW = 'view';
-    const EDIT = 'edit';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
 
     public function __construct(private readonly Security $security)
     {

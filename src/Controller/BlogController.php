@@ -8,7 +8,6 @@ use App\Form\BlogFilterType;
 use App\Form\BlogType;
 use App\Message\ContentWatchMessage;
 use App\Repository\BlogRepository;
-use App\Service\ContentWatchApi;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,11 +45,13 @@ class BlogController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, MessageBusInterface $bus): Response
     {
         $blog = new Blog($this->getUser());
-
+        dump($request);
+        dump($blog);
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($blog);
             $entityManager->persist($blog);
             $entityManager->flush();
 

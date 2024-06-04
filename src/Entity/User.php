@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,6 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -35,7 +39,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
+
+//    #[Gedmo\Timestampable(on: 'create')]
+//    #[ORM\Column(name: 'created', type: "datetime")]
+//    private ?\DateTimeInterface $created = null;
+//
+//
+//    #[ORM\Column(name: 'updated', type: "datetime")]
+//    #[Gedmo\Timestampable]
+//    private ?\DateTimeInterface $updated = null;
 
     public function getId(): ?int
     {
@@ -49,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getEmailFormatted(): ?string
     {
-        return 'Пользователь: '. $this->email;
+        return 'Пользователь: ' . $this->email;
     }
 
     public function setEmail(string $email): static
@@ -128,4 +141,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+//
+//    /**
+//     * @return \DateTimeInterface|null
+//     */
+//    public function getCreated(): ?\DateTimeInterface
+//    {
+//        return $this->created;
+//    }
+//
+//    /**
+//     * @return \DateTimeInterface|null
+//     */
+//    public function getUpdated(): ?\DateTimeInterface
+//    {
+//        return $this->updated;
+//    }
+
 }
