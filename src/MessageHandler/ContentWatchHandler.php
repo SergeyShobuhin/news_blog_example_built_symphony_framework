@@ -25,6 +25,8 @@ readonly class ContentWatchHandler
         $blogId = (int)$contentWatchMessage->getContent();
         $blog = $this->blogRepository->find($blogId);
 
+//        dump($blog); exit;
+
         $blog->setPercent(
             $this->contentWatchApi->checkText($blog->getText())
         );

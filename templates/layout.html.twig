@@ -79,7 +79,11 @@
         </ul>
         {% if app.user %}
         <button type="button" class="btn btn-primary">
-            {{ app.user.email }} <span class="badge bg-secondary">информация какая-нибудь</span>
+            {{ app.user.email }} <span class="badge bg-secondary">
+                {% if is_granted('ROLE_ADMIN') %} Администратор
+                {% else %} Пользователь
+                {% endif %}
+            </span>
         </button>
         {% endif %}
 

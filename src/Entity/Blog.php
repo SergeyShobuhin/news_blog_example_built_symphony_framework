@@ -52,6 +52,12 @@ class Blog
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $percent = null;
 
+    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::STRING)]
+    private ?string $status = null;
+
+
+
     public function __construct(UserInterface|User $user)
     {
         $this->user = $user;
@@ -149,4 +155,22 @@ class Blog
         $this->percent = $percent;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string|null $status
+     */
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
+        return $this;
+    }
+
 }

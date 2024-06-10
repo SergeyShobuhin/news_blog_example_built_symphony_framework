@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Message\UnsplashMessage;
 use App\Security\EmailVerifier;
 use App\Service\UnsplashService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,6 +12,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,6 +30,7 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
         UnsplashService $unsplashService,
+        MessageBusInterface $bus,
     ): Response
     {
         $user = new User();
@@ -44,13 +47,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $imageUrl = $unsplashService->getRandomImage();
-            $user->setAvatar($imageUrl);
-//            dd($imageUrl);
-
-//            dd($user);
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $bus->dispatch(new UnsplashMessage($user->getId()));
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,

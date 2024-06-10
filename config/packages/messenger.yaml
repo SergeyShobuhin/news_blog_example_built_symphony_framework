@@ -18,6 +18,7 @@ framework:
         routing:
             # Route your messages to the transports
              'App\Message\ContentWatchMessage': async
+             'App\Message\UnsplashMessage': async
 
 # when@test:
 #    framework:
