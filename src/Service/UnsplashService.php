@@ -11,7 +11,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class UnsplashService
 {
-//    private const API_URL = 'https://api.unsplash.com/photos/random/?client_id=YOUR_ACCESS_KEY';
     private const API_URL = 'https://api.unsplash.com/photos/random/';
 
     public function __construct(
@@ -33,15 +32,13 @@ class UnsplashService
 
         $response = $this->client->request(
             'GET',
-            'https://api.unsplash.com/photos/random',
+            self::API_URL,
             [
                 'query' => [
                     'client_id' => $this->key,
                 ],
             ]
-
         );
-//        dump($response); exit();
 
         if ($response->getStatusCode() !== 200) {
             return null;
@@ -49,10 +46,6 @@ class UnsplashService
 
         $data = $response->toArray();
 
-        dump($response);
-        dump($data);
-
         return $data['urls']['regular'] ?? null;
     }
-
 }
