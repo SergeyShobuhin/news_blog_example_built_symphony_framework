@@ -41,6 +41,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $avatar = null;
+
+
 //    #[Gedmo\Timestampable(on: 'create')]
 //    #[ORM\Column(name: 'created', type: "datetime")]
 //    private ?\DateTimeInterface $created = null;
@@ -141,6 +145,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string|null $avatar
+     */
+    public function setAvatar(?string $avatar): static
+    {
+        $this->avatar = $avatar;
+        return $this;
+    }
+
 //
 //    /**
 //     * @return \DateTimeInterface|null

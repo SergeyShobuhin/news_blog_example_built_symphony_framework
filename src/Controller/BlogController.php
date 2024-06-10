@@ -42,16 +42,20 @@ class BlogController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_blog_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, MessageBusInterface $bus): Response
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        MessageBusInterface $bus,
+    ): Response
     {
         $blog = new Blog($this->getUser());
-        dump($request);
-        dump($blog);
+//        dump($request);
+//        dump($blog);
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($blog);
+//            dump($blog);
             $entityManager->persist($blog);
             $entityManager->flush();
 

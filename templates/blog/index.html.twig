@@ -34,7 +34,7 @@
             <td>{{ blog.title }}</td>
             <td>{{ blog.description | length > 50 ? blog.description | slice(0,50) ~ '...' : blog.description }}</td>
             <td>{{ blog.text | length > 50 ? blog.text | slice(0,150) ~ '...' : blog.text }}</td>
-            <td>{{ blog.percent}}</td>
+            <td>{{ blog.user.avatar}}</td>
             <td>
                 <a href="{{ path('app_blog_show', {'id': blog.id}) }}">
                     <button class="btn-primary"> show</button>
