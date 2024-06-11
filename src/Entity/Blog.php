@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BlogRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Blog
 {
 //    use TimestampableEntity;
@@ -56,11 +57,20 @@ class Blog
     #[ORM\Column(type: Types::STRING)]
     private ?string $status = null;
 
-
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTime $blockedAt;
 
     public function __construct(UserInterface|User $user)
     {
         $this->user = $user;
+    }
+
+    #[ORM\PreUpdate]
+    public function setBlockedAtValue(): void
+    {
+        if ($this->status === 'blocked' && !$this->blockedAt) {
+            $this->blockedAt = new \DateTime();
+        }
     }
 
     public function getId(): ?int
@@ -173,4 +183,20 @@ class Blog
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
+    public function getBlockedAt(): ?\DateTime
+    {
+        return $this->blockedAt;
+    }
+
+    /**
+     * @param \DateTime|null $blockedAt
+     */
+    public function setBlockedAt(?\DateTime $blockedAt): static
+    {
+        $this->blockedAt = $blockedAt;
+        return $this;
+    }
 }

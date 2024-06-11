@@ -45,6 +45,7 @@ class UnsplashService
         }
 
         $data = $response->toArray();
+        dump($data);
 
         return $data['urls']['regular'] ?? null;
     }

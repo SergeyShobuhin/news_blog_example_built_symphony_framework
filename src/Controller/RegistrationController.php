@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Message\UnsplashMessage;
 use App\Security\EmailVerifier;
-use App\Service\UnsplashService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +28,7 @@ class RegistrationController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
-        UnsplashService $unsplashService,
+//        UnsplashService $unsplashService,
         MessageBusInterface $bus,
     ): Response
     {
