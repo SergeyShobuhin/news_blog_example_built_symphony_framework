@@ -66,11 +66,12 @@ class BlogType extends AbstractType
                     'choice_label' => 'emailFormatted',
                     'placeholder' => '-- выбор пользователя --',
                 ])->add('status', ChoiceType::class, [
+                    'empty_data' => null,
                     'choices' => [
                         'pending' => 'pending',
                         'active' => 'active',
                         'blocked' => 'blocked',
-                    ]
+                    ],
                 ]);
             }
 

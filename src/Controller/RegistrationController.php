@@ -49,7 +49,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $bus->dispatch(new UnsplashMessage($user->getId()));
+//            $bus->dispatch(new UnsplashMessage($user->getId()));
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,

@@ -29,6 +29,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    doctrine.orm.default_metadata_driver:
+        public: true
+        class: Doctrine\Persistence\Mapping\Driver\MappingDriverChain
+        arguments: [null]
+        calls:
+            - method: addDriver
+              arguments:
+                  - '@doctrine.orm.default_attribute_metadata_driver'
+                  - 'App\Entity'
+            - method: addDriver
+              arguments:
+                  - '@doctrine.orm.default_attribute_metadata_driver'
+                  - 'Gedmo'
 
     App\Service\ContentWatchApi:
         $key: '%env(CONTENT_WATCH_API_KEY)%'

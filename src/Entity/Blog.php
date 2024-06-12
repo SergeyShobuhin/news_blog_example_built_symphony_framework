@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class Blog
 {
-//    use TimestampableEntity;
+    use TimestampableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -55,7 +55,7 @@ class Blog
 
     #[Assert\NotBlank]
     #[ORM\Column(type: Types::STRING)]
-    private ?string $status = null;
+    private ?string $status = 'pending';
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $blockedAt;
