@@ -57,7 +57,7 @@ class Blog
     #[ORM\Column(type: Types::STRING)]
     private ?string $status = 'pending';
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $blockedAt;
 
     public function __construct(UserInterface|User $user)

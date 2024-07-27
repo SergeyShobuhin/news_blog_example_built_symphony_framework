@@ -24,9 +24,10 @@ doctrine:
                 alias: App
             gedmo:
                 type: attribute
-                dir: '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src'
-                prefix: 'Gedmo'
-                alias: Gedmo
+                mapping: false
+#                dir: '%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src'
+#                prefix: 'Gedmo'
+#                alias: Gedmo
 
 when@test:
     doctrine:
