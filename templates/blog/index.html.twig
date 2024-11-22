@@ -3,63 +3,65 @@
 {% block title %}Blog index{% endblock %}
 
 {% block body %}
-<h1>Blog index</h1>
+    <h1>Blog index</h1>
 
-{{ form_start(searchForm) }}
+    {{ form_start(searchForm) }}
     {{ form_widget(searchForm) }}
-<button class="btn-success">{{ button_label|default('Поиск') }}</button>
-{{ form_end(searchForm) }}
+    <button class="btn-success">{{ button_label|default('Поиск') }}</button>
+    {{ form_end(searchForm) }}
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Автор</th>
-        <th>Тема</th>
-        <th>Описание</th>
-        <th>Содержание</th>
-        <th>% уникальности</th>
-        <th>actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for blog in pagination %}
+    <table class="table">
+        <thead>
         <tr>
-            <td>{{ blog.id }}</td>
-            {% if blog.user is not empty %}
-                <td>{{ blog.user.email }}</td>
-            {% else %}
-                <td>Автор изчес &#128561</td>
-            {% endif %}
-            <td>{{ blog.title }}</td>
-            <td>{{ blog.description | length > 50 ? blog.description | slice(0,50) ~ '...' : blog.description }}</td>
-            <td>{{ blog.text | length > 50 ? blog.text | slice(0,150) ~ '...' : blog.text }}</td>
-            <td>{{ blog.user.avatar}}</td>
-            <td>
-                <a href="{{ path('app_blog_show', {'id': blog.id}) }}">
-                    <button class="btn-primary"> show</button>
-                </a>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_blog_edit', {'id': blog.id}) }}">
-                        <button class="btn-success"> edit</button>
-                    </a>
+            <th>ID</th>
+            <th>Автор</th>
+            <th>Тема</th>
+            <th>Описание</th>
+            <th>Содержание</th>
+            <th>Аватарка</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for blog in pagination %}
+            <tr>
+                <td>{{ blog.id }}</td>
+                {% if blog.user is not empty %}
+                    <td>{{ blog.user.email }}</td>
                 {% else %}
-                    <a href="{{ path('app_user_blog_edit', {'id': blog.id}) }}">
-                        <button class="btn-success"> edit</button>
-                    </a>
+                    <td>Автор изчес &#128561</td>
                 {% endif %}
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.description | length > 50 ? blog.description | slice(0,50) ~ '...' : blog.description }}</td>
+                <td>{{ blog.text | length > 50 ? blog.text | slice(0,150) ~ '...' : blog.text }}</td>
+                <td>{{ blog.user.avatar }}</td>
+                <td>
+                    <a href="{{ path('app_blog_show', {'id': blog.id}) }}">
+                        <button class="btn-primary"> читать</button>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_blog_edit', {'id': blog.id}) }}">
+                            <button class="btn-success"> edit</button>
+                        </a>
+                    {% else %}
+                        {% if app.request.pathInfo == '/user/blog/' %}
+                            <a href="{{ path('app_user_blog_edit', {'id': blog.id}) }}">
+                                <button class="btn-success"> edit</button>
+                            </a>
+                        {% endif %}
+                    {% endif %}
 
-            </td>
-        </tr>
-    {% else %}
-        <tr>
-            <td colspan="5">no records found</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<div class="navigation">
+    <div class="navigation">
     {{ knp_pagination_render(pagination) }}
 
     {% if is_granted('ROLE_ADMIN') %}
@@ -72,4 +74,4 @@
         </a>
     {% endif %}
 
-    {% endblock %}
+{% endblock %}

@@ -4,10 +4,8 @@ namespace App\Entity;
 
 use App\Repository\BlogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Tag;
 use Doctrine\ORM\PersistentCollection;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -59,6 +57,9 @@ class Blog
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $blockedAt;
+
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'blog', cascade: ['persist', 'remove'])]
+    private ArrayCollection|PersistentCollection $comments;
 
     public function __construct(UserInterface|User $user)
     {
@@ -199,4 +200,10 @@ class Blog
         $this->blockedAt = $blockedAt;
         return $this;
     }
+
+    public function getComments(): ArrayCollection|PersistentCollection
+    {
+        return $this->comments;
+    }
+
 }

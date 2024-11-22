@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Entity\Comment;
 use App\Filter\BlogFilter;
 use App\Form\BlogFilterType;
 use App\Form\BlogType;
+use App\Form\CommentType;
 use App\Message\ContentWatchMessage;
 use App\Repository\BlogRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,8 +35,6 @@ class BlogController extends AbstractController
             10 /*limit per page*/
         );
 
-//        dd($pagination); exit;
-
         return $this->render('blog/index.html.twig', [
             'pagination' => $pagination,
             'searchForm' => $form->createView(),
@@ -43,19 +43,19 @@ class BlogController extends AbstractController
 
     #[Route('/new', name: 'app_user_blog_new', methods: ['GET', 'POST'])]
     public function new(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $entityManager,
-        MessageBusInterface $bus,
+        MessageBusInterface    $bus,
     ): Response
     {
+
         $blog = new Blog($this->getUser());
-//        dump($request);
-//        dump($blog);
+
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            dd($blog);
+
             $entityManager->persist($blog);
             $entityManager->flush();
 
@@ -65,6 +65,39 @@ class BlogController extends AbstractController
         }
 
         return $this->render('blog/new.html.twig', [
+            'blog' => $blog,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/show', name: 'app_blog_show', methods: ['GET', 'POST'])]
+    public function show(
+        Request                $request,
+        Blog                   $blog,
+        EntityManagerInterface $entityManager
+    ): Response
+    {
+
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('Вы должны войти в систему.');
+        }
+
+        $comment = new Comment();
+        $comment->setBlog($blog);
+        $comment->setAuthor($this->getUser());
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_blog_show', ['id' => $blog->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('blog/show.html.twig', [
             'blog' => $blog,
             'form' => $form,
         ]);

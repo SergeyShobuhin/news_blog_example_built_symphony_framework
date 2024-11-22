@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Домашняя новости </title>
+    <title> Домашняя новости </title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
@@ -56,11 +56,12 @@
                 </li>
             {% endif %}
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" href="{{ url('app_homePageBlogs') }}"
+                   data-toggle="dropdown" aria-expanded="false">ВСЕ БЛОГИ</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="{{ url('app_homePageBlogs') }}">ВСЕ БЛОГИ</a>
+                    <a class="dropdown-item" href="#">Какая-нибудь категория</a>
+                    <a class="dropdown-item" href="#">Ещё категория</a>
                 </div>
             </li>
             {% if app.user == false %}
@@ -70,7 +71,7 @@
             {% endif %}
             {% if app.user %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('_logout_main') }}">ЛОГАУТ</a>
+                    <a class="nav-link btn btn-outline-primary" href="{{ url('app_user_blog_index') }}">МОИ БЛОГИ</a>
                 </li>
                 {#                <li class="nav-item active position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"> #}
                 {#                    {{ app.user.email }} #}
@@ -78,13 +79,14 @@
             {% endif %}
         </ul>
         {% if app.user %}
-        <button type="button" class="btn btn-primary">
-            {{ app.user.email }} <span class="badge bg-secondary">
+            <button type="button" class="btn btn-primary">
+                {{ app.user.email }} <span class="badge bg-secondary">
                 {% if is_granted('ROLE_ADMIN') %} Администратор
                 {% else %} Пользователь
                 {% endif %}
             </span>
-        </button>
+            </button>
+            <a class="nav-link" href="{{ path('_logout_main') }}">ЛОГАУТ</a>
         {% endif %}
 
         <form class="form-inline my-2 my-lg-0">
@@ -99,52 +101,22 @@
 
 <main role="main">
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    {#  <div class="jumbotron"> #}
-    {#    <div class="container"> #}
-    {#      <h1 class="display-3">Hello, world!</h1> #}
-    {#      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p> #}
-    {#      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> #}
-    {#    </div> #}
-    {#  </div> #}
-
     <div class="container">
         <!-- Example row of columns -->
         <div class="row">
             <div class="col-md-12">
                 {% block body %}{% endblock %}
             </div>
-            {#      <div class="col-md-4"> #}
-            {#        <h2>Heading</h2> #}
-            {#        <p>Standing on the frontline when the bombs start to fall. Heaven is jealous of our love, angels are crying from up above. Can't replace you with a million rings. Boy, when you're with me I'll give you a taste. There’s no going back. Before you met me I was alright but things were kinda heavy. Heavy is the head that wears the crown.</p> #}
-            {#        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> #}
-            {#      </div> #}
-            {#      <div class="col-md-4"> #}
-            {#        <h2>Heading</h2> #}
-            {#        <p>Playing ping pong all night long, everything's all neon and hazy. Yeah, she's so in demand. She's sweet as pie but if you break her heart. But down to earth. It's time to face the music I'm no longer your muse. I guess that I forgot I had a choice.</p> #}
-            {#        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> #}
-            {#      </div> #}
-            {#    </div> #}
-
             <hr>
-
         </div> <!-- /container -->
-
+    </div>
 </main>
-
-{# <footer class="container"> #}
-{#  <p>&copy; Company 2017-2022</p> #}
-{# </footer> #}
-
-
-{# <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> #}
-{# <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script> #}
-{# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> #}
-
-
 <br>
 <br>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

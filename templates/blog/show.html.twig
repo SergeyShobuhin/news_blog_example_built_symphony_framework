@@ -1,42 +1,67 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Blog{% endblock %}
+{% block title %}SHOW Blog{% endblock %}
 
 {% block body %}
     <h1>Blog</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ blog.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ blog.title }}</td>
-            </tr>
-            {% if blog.category is not empty %}
+        <tr>
+            <th>Id</th>
+            <td>{{ blog.id }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ blog.title }}</td>
+        </tr>
+        {% if blog.category is not empty %}
             <tr>
                 <th>Category</th>
                 <td>{{ blog.category.name }}</td>
             </tr>
-            {% endif %}
-            <tr>
-                <th>Description</th>
-                <td>{{ blog.description }}</td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ blog.text }}</td>
-            </tr>
+        {% endif %}
+        <tr>
+            <th>Description</th>
+            <td>{{ blog.description }}</td>
+        </tr>
+        <tr>
+            <th>Text</th>
+            <td>{{ blog.text }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_blog_index') }}">back to list</a>
+    <a href="{{ path('app_user_blog_index') }}">Вернуться к своим публикациям</a>
     <br><br>
 
-    <a href="{{ path('app_user_blog_edit', {'id': blog.id}) }}"><button class="btn-success"> edit </button></a>
+    <a href="{{ path('app_user_blog_edit', {'id': blog.id}) }}">
+        <button class="btn-success"> edit</button>
+    </a>
     <br><br>
 
     {{ include('blog/_delete_form.html.twig') }}
+
+    <h2>Комментарии:</h2>
+
+    {% for comment in blog.comments %}
+        <div>
+{#            {{ dump(comment) }}#}
+            <strong>{{ comment.author.email }}</strong> написал в
+                <small>{{ comment.createdAt|date('d.m.Y H:i') }} </small>:
+            <p>{{ comment.content }}</p>
+            <br>
+        </div>
+    {% else %}
+        <p>Комментариев пока нет.</p>
+    {% endfor %}
+
+    <br>
+    <h2>Добавить комментарий:</h2>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn-success">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+
 {% endblock %}
