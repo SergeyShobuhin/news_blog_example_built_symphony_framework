@@ -5,6 +5,7 @@
 1) docker exec -it php sh
 2) php bin/console make:migration
 3) php bin/console doctrine:migrations:migrate
+
     и заполняем базу если нужно
 4) php bin/console doctrine:fixtures:load
 
