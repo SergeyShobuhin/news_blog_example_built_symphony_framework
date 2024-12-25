@@ -24,13 +24,6 @@ readonly class UnsplashHandler
         $userId = (int)$unsplashMessage->getContent();
         $user = $this->userRepository->find($userId);
 
-
-
-//        $imageUrl = $unsplashService->getRandomImage();
-//            $user->setAvatar($imageUrl);
-//        dump($userId);
-//        dump($user); exit;
-
         $user->setAvatar(
             $this->unsplashService->getRandomImage()
         );

@@ -30,7 +30,6 @@ class UnsplashService
     public function getRandomImage(): ?string
     {
 
-        dump($this->client);
         $response = $this->client->request(
             'GET',
             self::API_URL,
@@ -41,15 +40,12 @@ class UnsplashService
             ]
         );
 
-        dump($response->toArray());
-
         if ($response->getStatusCode() !== 200) {
             return null;
         }
 
         $data = $response->toArray();
 
-        dd($data);
         return $data['urls']['regular'] ?? null;
     }
 }

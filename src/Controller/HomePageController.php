@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Filter\BlogFilter;
 use App\Form\BlogFilterType;
 use App\Repository\BlogRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
+use App\Service\GismeteoApi;
 use App\Service\UnsplashService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,12 +22,16 @@ class HomePageController extends AbstractController
         BlogRepository  $blogRepository,
         UserRepository  $userRepository,
         UnsplashService $unsplashService,
+        GismeteoApi     $gismeteoApi,
+        CategoryRepository $categoryRepository
     ): Response
     {
         return $this->render('homePage/index.html.twig', [
             'blogs' => $blogRepository->getBlocs(),
             'users' => $userRepository->findall(),
             'unsplashService' => $unsplashService,
+            'gismeteo' => $gismeteoApi,
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 

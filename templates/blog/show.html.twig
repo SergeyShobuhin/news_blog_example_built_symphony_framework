@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}SHOW Blog{% endblock %}
+{% block title %}Блог - Новость{% endblock %}
 
 {% block body %}
-    <h1>Blog</h1>
+    <h1>Блог - Новость</h1>
 
     <table class="table">
         <tbody>
@@ -53,11 +53,11 @@
             <br>
         </div>
     {% else %}
-        <p>Комментариев пока нет.</p>
+        <p>Это пока не кому не интересно.</p>
     {% endfor %}
 
     <br>
-    <h2>Добавить комментарий:</h2>
+    <h2>Напиши, что об этом думаешь:</h2>
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <button class="btn-success">{{ button_label|default('Save') }}</button>
