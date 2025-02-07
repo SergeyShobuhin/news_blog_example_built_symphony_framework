@@ -32,36 +32,17 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_blog_index') }}">Вернуться к своим публикациям</a>
+    <a href="{{ path('app_user_blog_index') }}">Вернуться к своим публикациям</a><br>
+    <a href="{{ path('app_blog_index') }}">Вернуться к публикациям</a>
     <br><br>
 
     <a href="{{ path('app_user_blog_edit', {'id': blog.id}) }}">
-        <button class="btn-success"> edit</button>
+        <button class="btn-success">edit</button>
     </a>
     <br><br>
 
     {{ include('blog/_delete_form.html.twig') }}
 
-    <h2>Комментарии:</h2>
-
-    {% for comment in blog.comments %}
-        <div>
-{#            {{ dump(comment) }}#}
-            <strong>{{ comment.author.email }}</strong> написал в
-                <small>{{ comment.createdAt|date('d.m.Y H:i') }} </small>:
-            <p>{{ comment.content }}</p>
-            <br>
-        </div>
-    {% else %}
-        <p>Это пока не кому не интересно.</p>
-    {% endfor %}
-
-    <br>
-    <h2>Напиши, что об этом думаешь:</h2>
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn-success">{{ button_label|default('Save') }}</button>
-    {{ form_end(form) }}
-
+    {{ include ('comment/index.html.twig') }}
 
 {% endblock %}

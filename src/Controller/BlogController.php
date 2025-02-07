@@ -3,14 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Blog;
-use App\Entity\Comment;
 use App\Filter\BlogFilter;
 use App\Form\BlogFilterType;
 use App\Form\BlogType;
 use App\Form\CommentType;
 use App\Message\ContentWatchMessage;
 use App\Repository\BlogRepository;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,8 +23,8 @@ class BlogController extends AbstractController
 {
     #[Route('/', name: 'app_user_blog_index', methods: ['GET'])]
     public function index(
-        Request $request,
-        BlogRepository $blogRepository,
+        Request            $request,
+        BlogRepository     $blogRepository,
         PaginatorInterface $paginator,
     ): Response
     {
@@ -77,9 +75,7 @@ class BlogController extends AbstractController
 
     #[Route('/{id}/show', name: 'app_blog_show', methods: ['GET', 'POST'])]
     public function show(
-        Request                $request,
-        Blog                   $blog,
-        EntityManagerInterface $entityManager
+        Blog $blog,
     ): Response
     {
 
@@ -87,24 +83,25 @@ class BlogController extends AbstractController
             throw $this->createAccessDeniedException('Вы должны войти в систему.');
         }
 
-        $comment = new Comment();
-        $comment->setBlog($blog);
-        $comment->setAuthor($this->getUser());
+        // Форма для добавления нового (верхнего уровня) комментария
+        $commentForm = $this->createForm(CommentType::class);
 
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->persist($comment);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_blog_show', ['id' => $blog->getId()], Response::HTTP_SEE_OTHER);
+        // Для каждого комментария блога создаем форму для ответа.
+        // Заметьте, что если комментариев много, можно применять ленивую загрузку или AJAX-запросы для подгрузки формы по требованию.
+        $replyForms = [];
+        foreach ($blog->getComments() as $comment) {
+            $replyForms[$comment->getId()] = $this->createForm(CommentType::class, null, [
+                'action' => $this->generateUrl('app_comment_reply', [
+                    'id' => $blog->getId(),
+                    'parentId' => $comment->getId()
+                ])
+            ])->createView();
         }
 
         return $this->render('blog/show.html.twig', [
             'blog' => $blog,
-            'form' => $form,
+            'commentForm' => $commentForm->createView(),
+            'replyForms' => $replyForms,  // Массив форм для ответов, ключ – id родительского комментария
         ]);
     }
 
@@ -138,4 +135,5 @@ class BlogController extends AbstractController
 
         return $this->redirectToRoute('app_blog_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

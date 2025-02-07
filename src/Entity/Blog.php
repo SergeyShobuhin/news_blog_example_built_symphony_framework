@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BlogRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -56,7 +57,7 @@ class Blog
     private ?string $status = 'pending';
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTime $blockedAt;
+    private ?DateTime $blockedAt;
 
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'blog', cascade: ['persist', 'remove'])]
     private ArrayCollection|PersistentCollection $comments;
@@ -70,7 +71,7 @@ class Blog
     public function setBlockedAtValue(): void
     {
         if ($this->status === 'blocked' && !$this->blockedAt) {
-            $this->blockedAt = new \DateTime();
+            $this->blockedAt = new DateTime();
         }
     }
 
@@ -164,6 +165,7 @@ class Blog
     public function setPercent(?string $percent): static
     {
         $this->percent = $percent;
+
         return $this;
     }
 
@@ -177,27 +179,31 @@ class Blog
 
     /**
      * @param string|null $status
+     * @return Blog
      */
     public function setStatus(?string $status): static
     {
         $this->status = $status;
+
         return $this;
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getBlockedAt(): ?\DateTime
+    public function getBlockedAt(): ?DateTime
     {
         return $this->blockedAt;
     }
 
     /**
-     * @param \DateTime|null $blockedAt
+     * @param DateTime|null $blockedAt
+     * @return Blog
      */
-    public function setBlockedAt(?\DateTime $blockedAt): static
+    public function setBlockedAt(?DateTime $blockedAt): static
     {
         $this->blockedAt = $blockedAt;
+
         return $this;
     }
 
@@ -205,5 +211,4 @@ class Blog
     {
         return $this->comments;
     }
-
 }

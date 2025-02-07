@@ -8,7 +8,10 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/logout' => [[['_route' => '_logout_main'], null, null, null, false, false, null]],
+        '/logout' => [
+            [['_route' => '_logout_main'], null, null, null, false, false, null],
+            [['_route' => 'app_logout', '_controller' => 'App\\Controller\\LoginController::logout'], null, ['GET' => 0], null, false, false, null],
+        ],
         '/_profiler' => [[['_route' => '_profiler_home', '_controller' => 'web_profiler.controller.profiler::homeAction'], null, null, null, true, false, null]],
         '/_profiler/search' => [[['_route' => '_profiler_search', '_controller' => 'web_profiler.controller.profiler::searchAction'], null, null, null, false, false, null]],
         '/_profiler/search_bar' => [[['_route' => '_profiler_search_bar', '_controller' => 'web_profiler.controller.profiler::searchBarAction'], null, null, null, false, false, null]],
@@ -64,8 +67,12 @@ return [
                     .'|/(?'
                         .'|show(*:331)'
                         .'|edit(*:343)'
+                        .'|comment/(?'
+                            .'|add(*:365)'
+                            .'|([^/]++)/reply(*:387)'
+                        .')'
                     .')'
-                    .'|(*:352)'
+                    .'|(*:397)'
                 .')'
             .')/?$}sDu',
     ],
@@ -85,7 +92,9 @@ return [
         291 => [[['_route' => 'app_category_delete', '_controller' => 'App\\Controller\\Admin\\CategoryController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
         331 => [[['_route' => 'app_blog_show', '_controller' => 'App\\Controller\\BlogController::show'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
         343 => [[['_route' => 'app_user_blog_edit', '_controller' => 'App\\Controller\\BlogController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        352 => [
+        365 => [[['_route' => 'app_comment_add', '_controller' => 'App\\Controller\\CommentController::add'], ['id'], ['POST' => 0], null, false, false, null]],
+        387 => [[['_route' => 'app_comment_reply', '_controller' => 'App\\Controller\\CommentController::reply'], ['id', 'parentId'], ['POST' => 0], null, false, false, null]],
+        397 => [
             [['_route' => 'app_user_blog_delete', '_controller' => 'App\\Controller\\BlogController::delete'], ['id'], ['POST' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,11 @@ class CommentType extends AbstractType
         $builder->add('content', TextareaType::class, [
             'label' => 'Ваш комментарий',
             'required' => true,
-            'attr' => ['rows' => 5],
+            'attr' => ['rows' => 3],
+        ])
+        ->add('replies', HiddenType::class, [
+            'mapped' => false,
+            'required' => false,
         ]);
     }
 

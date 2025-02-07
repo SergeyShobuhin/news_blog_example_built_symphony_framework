@@ -19,10 +19,10 @@ class HomePageController extends AbstractController
 {
     #[Route('/', name: 'app_homePage')]
     public function index(
-        BlogRepository  $blogRepository,
-        UserRepository  $userRepository,
-        UnsplashService $unsplashService,
-        GismeteoApi     $gismeteoApi,
+        BlogRepository     $blogRepository,
+        UserRepository     $userRepository,
+        UnsplashService    $unsplashService,
+        GismeteoApi        $gismeteoApi,
         CategoryRepository $categoryRepository
     ): Response
     {

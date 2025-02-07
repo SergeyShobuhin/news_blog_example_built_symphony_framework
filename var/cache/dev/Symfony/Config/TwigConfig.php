@@ -51,7 +51,7 @@ class TwigConfig implements \Symfony\Component\Config\Builder\ConfigBuilderInter
      * @template TValue
      * @param TValue $value
      * @example "@bar"
-     * @example 3.1400000000000001
+     * @example 3.14
      * @return \Symfony\Config\Twig\GlobalConfig|$this
      * @psalm-return (TValue is array ? \Symfony\Config\Twig\GlobalConfig : static)
      */

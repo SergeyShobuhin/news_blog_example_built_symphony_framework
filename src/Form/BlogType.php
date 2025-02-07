@@ -20,7 +20,7 @@ class BlogType extends AbstractType
 {
     public function __construct(
         private readonly TagTransformer $transformer,
-        private readonly Security $security,
+        private readonly Security       $security,
     )
     {
     }
@@ -41,47 +41,46 @@ class BlogType extends AbstractType
                 'help' => 'текст',
             ]);
 
-            if ($this->security->isGranted('ROLE_ADMIN')) {
-                $builder->add('category', EntityType::class, [
-                    // ищет варианты из этой записи
-                    'class' => Category::class,
-                    'query_builder' => function ($repository) {
-                        return $repository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
-                    },
-                    'choice_label' => 'name',
-                    'required' => false,
-                    'empty_data' => null,
-                    'placeholder' => '-- выбор категории --',
-                    'help' => 'Категории'
-
-                    // используется для отображение поля выбора,чекбокса или селективных кнопок
-                    // 'multiple' => true,
-                    // 'expanded' => true,
-                ])->add('user', EntityType::class, [
-                    'class' => User::class,
-                    'query_builder' => function ($repository) {
-                        return $repository->createQueryBuilder('p')->orderBy('p.id', 'ASC');
-                    },
-                    'required' => false,
-                    'empty_data' => '',
-                    'choice_label' => 'emailFormatted',
-                    'placeholder' => '-- выбор пользователя --',
-                ])->add('status', ChoiceType::class, [
-                    'empty_data' => null,
-                    'choices' => [
-                        'pending' => 'pending',
-                        'active' => 'active',
-                        'blocked' => 'blocked',
-                    ],
-                ]);
-            }
-
-            $builder->add('tags', TextType::class, array(
-                'label' => 'Теги',
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            $builder->add('category', EntityType::class, [
+                // ищет варианты из этой записи
+                'class' => Category::class,
+                'query_builder' => function ($repository) {
+                    return $repository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
+                },
+                'choice_label' => 'name',
                 'required' => false,
+                'empty_data' => null,
+                'placeholder' => '-- выбор категории --',
                 'help' => 'Категории'
-            ))
-        ;
+
+                // используется для отображение поля выбора,чекбокса или селективных кнопок
+                // 'multiple' => true,
+                // 'expanded' => true,
+            ])->add('user', EntityType::class, [
+                'class' => User::class,
+                'query_builder' => function ($repository) {
+                    return $repository->createQueryBuilder('p')->orderBy('p.id', 'ASC');
+                },
+                'required' => false,
+                'empty_data' => '',
+                'choice_label' => 'emailFormatted',
+                'placeholder' => '-- выбор пользователя --',
+            ])->add('status', ChoiceType::class, [
+                'empty_data' => null,
+                'choices' => [
+                    'pending' => 'pending',
+                    'active' => 'active',
+                    'blocked' => 'blocked',
+                ],
+            ]);
+        }
+
+        $builder->add('tags', TextType::class, array(
+            'label' => 'Теги',
+            'required' => false,
+            'help' => 'Категории'
+        ));
 
         $builder->get('tags')
             ->addModelTransformer($this->transformer);

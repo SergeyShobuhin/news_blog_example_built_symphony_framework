@@ -23,6 +23,12 @@ class LoginController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/logout', name: 'app_logout', methods: ['GET'])]
+    public function logout(): Response
+    {
+        return $this->redirectToRoute('app_login');
+    }
+
     #[Route('/login/redirect', name: 'app_login_redirect')]
     public function redirectLogin(Security $security): Response
     {
