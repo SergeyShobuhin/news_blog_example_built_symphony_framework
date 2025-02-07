@@ -1,0 +1,76 @@
+{# {% extends 'layout.html.twig' %} #}
+
+{% import _self as macros %}
+
+{% block body %}
+
+    <h2>Добавить комментарий:</h2>
+    {{ form_start(commentForm, {'action': path('app_comment_add', {'id': blog.id}) }) }}
+    {{ form_widget(commentForm) }}
+    <button class="btn-success">Опубликовать комментарий</button>
+    {{ form_end(commentForm) }}
+
+    <br>
+
+    {# Формируем массив верхнеуровневых комментариев #}
+    {% set topLevelComments = [] %}
+    {% for comment in blog.comments %}
+        {% if comment.parent is null %}
+            {% set topLevelComments = topLevelComments|merge([comment]) %}
+        {% endif %}
+    {% endfor %}
+
+    {# Рекурсивно рендерим все комментарии через макрос #}
+    {% if topLevelComments|length %}
+        {{ macros.render_comments(topLevelComments, replyForms) }}
+    {% else %}
+        <p>Комментариев пока нет.</p>
+    {% endif %}
+
+    <script>
+        // Скрипт для переключения отображения формы ответа
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.reply-toggle').forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    let commentId = this.getAttribute('data-comment-id');
+                    let formDiv = document.getElementById('reply-form-' + commentId);
+                    if (formDiv.style.display === 'none' || formDiv.style.display === '') {
+                        formDiv.style.display = 'block';
+                    } else {
+                        formDiv.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{# Рекурсивный макрос для отображения комментариев и их ответов #}
+{% macro render_comments(comments, replyForms) %}
+    {% for comment in comments %}
+        <div class="comment"
+             style="border: 1px solid #d4d879; padding: 10px; margin-bottom: 10px; margin-left: {{ loop.parent is defined ? 20 : 0 }}px;">
+            <strong>{{ comment.author.email }}</strong> написал в
+            <small>{{ comment.createdAt|date('d.m.Y H:i') }}</small>:ва
+            <p>{{ comment.content }}</p>
+
+            <button class="btn btn-link reply-toggle" data-comment-id="{{ comment.id }}">Ответить</button>
+            <div class="reply-form" id="reply-form-{{ comment.id }}" style="display: none; margin-left: 20px;">
+                {% if replyForms[comment.id] is defined %}
+                    {{ form_start(replyForms[comment.id]) }}
+                    {{ form_widget(replyForms[comment.id]) }}
+                    <button class="btn btn-success" type="submit">Отправить ответ</button>
+                    {{ form_end(replyForms[comment.id]) }}
+                {% else %}
+                    <em>Форма ответа не доступна.</em>
+                {% endif %}
+            </div>
+
+            {% if comment.replies|length %}
+                {{ _self.render_comments(comment.replies, replyForms) }}
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endmacro %}
+{# {% endblock %} #}
