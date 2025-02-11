@@ -87,7 +87,6 @@ class BlogController extends AbstractController
         $commentForm = $this->createForm(CommentType::class);
 
         // Для каждого комментария блога создаем форму для ответа.
-        // Заметьте, что если комментариев много, можно применять ленивую загрузку или AJAX-запросы для подгрузки формы по требованию.
         $replyForms = [];
         foreach ($blog->getComments() as $comment) {
             $replyForms[$comment->getId()] = $this->createForm(CommentType::class, null, [

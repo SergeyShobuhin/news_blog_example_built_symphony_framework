@@ -544,7 +544,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator..JeHTWJ"/>
+      <argument type="service" id=".service_locator.Ymp4cfj"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -3187,7 +3187,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator..JeHTWJ"/>
+      <argument type="service" id=".service_locator.Ymp4cfj"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -7269,12 +7269,11 @@
         <argument key="security" type="service_closure" id="security.helper"/>
       </argument>
     </service>
-    <service id=".service_locator.jUlH1E8" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.e_4zbH4" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="userPasswordHasher" type="service_closure" id="security.user_password_hasher"/>
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
-        <argument key="bus" type="service_closure" id="debug.traced.messenger.bus.default"/>
       </argument>
     </service>
     <service id=".service_locator.kPUOGb8" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -7283,7 +7282,7 @@
         <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator..JeHTWJ" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.Ymp4cfj" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -7302,7 +7301,7 @@
         <argument key="App\Controller\Admin\CategoryController::delete" type="service_closure" id=".service_locator.WoAniWU"/>
         <argument key="App\Controller\BlogController::index" type="service_closure" id=".service_locator.US_4TLn"/>
         <argument key="App\Controller\BlogController::new" type="service_closure" id=".service_locator.PcrcuR4"/>
-        <argument key="App\Controller\BlogController::show" type="service_closure" id=".service_locator.wVePTfL"/>
+        <argument key="App\Controller\BlogController::show" type="service_closure" id=".service_locator..TQcBti"/>
         <argument key="App\Controller\BlogController::edit" type="service_closure" id=".service_locator.wVePTfL"/>
         <argument key="App\Controller\BlogController::delete" type="service_closure" id=".service_locator.wVePTfL"/>
         <argument key="App\Controller\CommentController::add" type="service_closure" id=".service_locator.wVePTfL"/>
@@ -7311,7 +7310,7 @@
         <argument key="App\Controller\HomePageController::indexBlogs" type="service_closure" id=".service_locator.US_4TLn"/>
         <argument key="App\Controller\LoginController::index" type="service_closure" id=".service_locator.rSTd.nA"/>
         <argument key="App\Controller\LoginController::redirectLogin" type="service_closure" id=".service_locator.ATt7aga"/>
-        <argument key="App\Controller\RegistrationController::register" type="service_closure" id=".service_locator.jUlH1E8"/>
+        <argument key="App\Controller\RegistrationController::register" type="service_closure" id=".service_locator.e_4zbH4"/>
         <argument key="App\Controller\UserController::index" type="service_closure" id=".service_locator.kPUOGb8"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -7327,7 +7326,7 @@
         <argument key="App\Controller\Admin\CategoryController:delete" type="service_closure" id=".service_locator.WoAniWU"/>
         <argument key="App\Controller\BlogController:index" type="service_closure" id=".service_locator.US_4TLn"/>
         <argument key="App\Controller\BlogController:new" type="service_closure" id=".service_locator.PcrcuR4"/>
-        <argument key="App\Controller\BlogController:show" type="service_closure" id=".service_locator.wVePTfL"/>
+        <argument key="App\Controller\BlogController:show" type="service_closure" id=".service_locator..TQcBti"/>
         <argument key="App\Controller\BlogController:edit" type="service_closure" id=".service_locator.wVePTfL"/>
         <argument key="App\Controller\BlogController:delete" type="service_closure" id=".service_locator.wVePTfL"/>
         <argument key="App\Controller\CommentController:add" type="service_closure" id=".service_locator.wVePTfL"/>
@@ -7336,7 +7335,7 @@
         <argument key="App\Controller\HomePageController:indexBlogs" type="service_closure" id=".service_locator.US_4TLn"/>
         <argument key="App\Controller\LoginController:index" type="service_closure" id=".service_locator.rSTd.nA"/>
         <argument key="App\Controller\LoginController:redirectLogin" type="service_closure" id=".service_locator.ATt7aga"/>
-        <argument key="App\Controller\RegistrationController:register" type="service_closure" id=".service_locator.jUlH1E8"/>
+        <argument key="App\Controller\RegistrationController:register" type="service_closure" id=".service_locator.e_4zbH4"/>
         <argument key="App\Controller\UserController:index" type="service_closure" id=".service_locator.kPUOGb8"/>
       </argument>
     </service>
@@ -9167,7 +9166,7 @@
     <service id="Knp\Component\Pager\ArgumentAccess\ArgumentAccessInterface" alias="Knp\Component\Pager\ArgumentAccess\RequestArgumentAccess"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator..JeHTWJ"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.Ymp4cfj"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>
@@ -9216,7 +9215,7 @@
     <service id=".service_locator.CzslPD8" alias=".service_locator.OiOHUjB"/>
     <service id=".service_locator.7NIAq8D" alias=".service_locator.rSTd.nA"/>
     <service id=".service_locator.yArDdtI" alias=".service_locator.ATt7aga"/>
-    <service id=".service_locator.oYjcp3i" alias=".service_locator.jUlH1E8"/>
+    <service id=".service_locator.EV7oaoZ" alias=".service_locator.e_4zbH4"/>
     <service id=".service_locator.025Wi8b" alias=".service_locator.kPUOGb8"/>
     <service id=".service_locator.xgZqYYA" alias=".service_locator.O2p6Lk7"/>
   </services>

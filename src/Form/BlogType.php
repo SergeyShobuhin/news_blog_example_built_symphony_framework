@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Blog;
 use App\Entity\Category;
-use App\Entity\Comment;
 use App\Entity\User;
 use App\Form\DataTransformer\TagTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -43,7 +42,6 @@ class BlogType extends AbstractType
 
         if ($this->security->isGranted('ROLE_ADMIN')) {
             $builder->add('category', EntityType::class, [
-                // ищет варианты из этой записи
                 'class' => Category::class,
                 'query_builder' => function ($repository) {
                     return $repository->createQueryBuilder('p')->orderBy('p.name', 'ASC');
@@ -53,10 +51,6 @@ class BlogType extends AbstractType
                 'empty_data' => null,
                 'placeholder' => '-- выбор категории --',
                 'help' => 'Категории'
-
-                // используется для отображение поля выбора,чекбокса или селективных кнопок
-                // 'multiple' => true,
-                // 'expanded' => true,
             ])->add('user', EntityType::class, [
                 'class' => User::class,
                 'query_builder' => function ($repository) {
